@@ -3,10 +3,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.atlandes</groupId>
-    <artifactId>mercury</artifactId>
+    <artifactId>microtree</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>mercury Maven Webapp</name>
+    <name>microtree Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -14,7 +14,7 @@
     </properties>
 
     <build>
-        <finalName>mercury</finalName>
+        <finalName>microtree</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
