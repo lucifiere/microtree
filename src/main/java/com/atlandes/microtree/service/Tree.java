@@ -16,14 +16,17 @@ public class Tree<T> {
 
     private Node<T> root;
 
-    private Tree() {
+    public Tree() {
     }
 
-    public Tree<T> build(List<BusinessData<T>> businessData) {
+    public Node<T> getRoot() {
+        return root;
+    }
+
+    public Node<T> build(List<BusinessData<T>> businessData) {
         List<Node<T>> nodeList = convertBusinessData2Node(businessData);
         this.root = getRootNode(nodeList);
-        recursiveTree(this.root, nodeList);
-        return this;
+        return recursiveRoot(this.root, nodeList);
     }
 
     private List<Node<T>> convertBusinessData2Node(List<BusinessData<T>> businessDataList) {
@@ -50,14 +53,32 @@ public class Tree<T> {
         return root;
     }
 
-    private Node<T> recursiveTree(Node<T> rootNode, List<Node<T>> allNode) {
-//        List<Node<T>> children = rootNode.getParent() != nulrootNode.getChildren();
-//        for (Node<T> child : children) {
-//            recursiveTree(child, allNode);
-//            child.getChildren()
-//        }
-//        return curNode;
-        return null;
+    private Node<T> recursiveRoot(Node<T> rootNode, List<Node<T>> allNode) {
+        List<Node<T>> heightLevelNodes = new ArrayList<>();
+        for (Node<T> node : allNode) {
+            if (Objects.equals(node.getLevel(), Config.HEGHEST_LEVEL)) {
+                heightLevelNodes.add(node);
+            }
+        }
+        for (Node<T> heightLevelNode : heightLevelNodes) {
+            recursiveNode(heightLevelNode, allNode);
+        }
+        rootNode.setChildren(heightLevelNodes);
+        return rootNode;
+    }
+
+    private Node<T> recursiveNode(Node<T> curNode, List<Node<T>> allNode) {
+        List<Node<T>> childNodeList = new ArrayList<>();
+        for (Node<T> node : allNode) {
+            if (node.getParent().equals(curNode.getId())) {
+                childNodeList.add(node);
+            }
+        }
+        for (Node<T> child : childNodeList) {
+            recursiveNode(child, allNode);
+            curNode.getChildren().add(child);
+        }
+        return curNode;
     }
 
 }
