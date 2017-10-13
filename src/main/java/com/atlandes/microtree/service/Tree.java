@@ -56,7 +56,7 @@ public class Tree<T> {
     private Node<T> recursiveRoot(Node<T> rootNode, List<Node<T>> allNode) {
         List<Node<T>> heightLevelNodes = new ArrayList<>();
         for (Node<T> node : allNode) {
-            if (Objects.equals(node.getLevel(), Config.HEGHEST_LEVEL)) {
+            if (node.getParent() == null) {
                 heightLevelNodes.add(node);
             }
         }
@@ -70,7 +70,7 @@ public class Tree<T> {
     private Node<T> recursiveNode(Node<T> curNode, List<Node<T>> allNode) {
         List<Node<T>> childNodeList = new ArrayList<>();
         for (Node<T> node : allNode) {
-            if (node.getParent().equals(curNode.getId())) {
+            if (Objects.equals(node.getParent(), curNode.getId())) {
                 childNodeList.add(node);
             }
         }

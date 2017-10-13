@@ -55,6 +55,7 @@ public class Node<T> {
     public Node() {
         children = new ArrayList<>();
         spread = StatusEnum.NO.ordinal();
+        check = StatusEnum.NO.ordinal();
         display = StatusEnum.YES.ordinal();
         halfChoice = StatusEnum.NO.ordinal();
     }
