@@ -6,7 +6,9 @@ package com.atlandes.microtree.constants;
  */
 public interface Config {
 
-    int HEGHEST_LEVEL = 1;
+    int HIGHEST_LEVEL = 1;
+
+    int ROOT_LEVEL = 0;
 
     int STEP = 1;
 

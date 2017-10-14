@@ -1,8 +1,9 @@
-package com.atlandes.microtree.service;
+package com.atlandes.microtree.tree;
 
 import com.atlandes.microtree.constants.Config;
 import com.atlandes.microtree.pojo.BusinessData;
 import com.atlandes.microtree.pojo.Node;
+import com.atlandes.microtree.processor.Processor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +13,18 @@ import java.util.Objects;
  * Created by XD.Wang on 2017/10/11.
  * tree common impl
  */
-public class Tree<T> {
+public class DefaultTree<T> implements Tree<T> {
 
     private Node<T> root;
 
-    public Tree() {
+    public DefaultTree() {
     }
 
     public Node<T> getRoot() {
         return root;
     }
 
+    @Override
     public Node<T> build(List<BusinessData<T>> businessData) {
         List<Node<T>> nodeList = convertBusinessData2Node(businessData);
         this.root = getRootNode(nodeList);
@@ -44,9 +46,10 @@ public class Tree<T> {
 
     private Node<T> getRootNode(List<Node<T>> nodeList) {
         Node<T> root = new Node<>();
+        root.setLevel(Config.ROOT_LEVEL);
         List<Node<T>> children = root.getChildren();
         for (Node<T> node : nodeList) {
-            if (Objects.equals(node.getLevel(), Config.HEGHEST_LEVEL)) {
+            if (Objects.equals(node.getLevel(), Config.HIGHEST_LEVEL)) {
                 children.add(node);
             }
         }
@@ -57,6 +60,7 @@ public class Tree<T> {
         List<Node<T>> heightLevelNodes = new ArrayList<>();
         for (Node<T> node : allNode) {
             if (node.getParent() == null) {
+                node.setLevel(Config.HIGHEST_LEVEL);
                 heightLevelNodes.add(node);
             }
         }
@@ -71,6 +75,7 @@ public class Tree<T> {
         List<Node<T>> childNodeList = new ArrayList<>();
         for (Node<T> node : allNode) {
             if (Objects.equals(node.getParent(), curNode.getId())) {
+                node.setLevel(curNode.getLevel() + 1);
                 childNodeList.add(node);
             }
         }
@@ -79,6 +84,15 @@ public class Tree<T> {
             curNode.getChildren().add(child);
         }
         return curNode;
+    }
+
+    @Override
+    public void travel(Node<T> curNode, Processor processor) {
+        if (curNode == null) return;
+        processor.process();
+        for (Node<T> child : curNode.getChildren()) {
+            travel(child, processor);
+        }
     }
 
 }
