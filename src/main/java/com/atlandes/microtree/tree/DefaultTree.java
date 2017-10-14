@@ -20,6 +20,7 @@ public class DefaultTree<T> implements Tree<T> {
     public DefaultTree() {
     }
 
+    @Override
     public Node<T> getRoot() {
         return root;
     }

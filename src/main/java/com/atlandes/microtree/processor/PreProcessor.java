@@ -2,7 +2,8 @@ package com.atlandes.microtree.processor;
 
 import com.atlandes.microtree.exception.TreeStateException;
 import com.atlandes.microtree.pojo.Node;
-import com.atlandes.microtree.tree.DefaultTree;
+import com.atlandes.microtree.tree.Family;
+import com.atlandes.microtree.tree.Tree;
 
 import java.util.List;
 
@@ -12,11 +13,13 @@ import java.util.List;
  */
 public abstract class PreProcessor<T> implements Processor<T> {
 
-    protected DefaultTree<T> tree;
-    protected Node<T> currentNode;
+    protected Tree<T> tree;
     protected List<Integer> checkedIdList;
 
-    public PreProcessor(DefaultTree<T> tree, List<Integer> checkedIdList) {
+    protected Node<T> currentNode;
+    protected Family<T> family = new Family<>();
+
+    public PreProcessor(Tree<T> tree, List<Integer> checkedIdList) {
         this.tree = tree;
         this.checkedIdList = checkedIdList;
     }
@@ -32,6 +35,7 @@ public abstract class PreProcessor<T> implements Processor<T> {
     @Override
     public void process(Node<T> node) {
         currentNode = node;
+        family.analysis(currentNode);
         if (isNormalState()) {
             handleCheck();
             handleSpread();
