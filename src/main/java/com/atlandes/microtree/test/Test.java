@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.atlandes.microtree.pojo.BusinessData;
 import com.atlandes.microtree.pojo.Node;
 import com.atlandes.microtree.processor.DefaultPreProcessor;
-import com.atlandes.microtree.processor.Processor;
 import com.atlandes.microtree.tree.DefaultTree;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class Test {
     public static void main(String[] args) {
         DefaultTree tree = new DefaultTree();
         Node node = tree.build(getTestData());
-        tree.travel(new DefaultPreProcessor(tree, Arrays.asList(1, 2, 3, 8, 11, 55)));
+        tree.downwardTravel(new DefaultPreProcessor(tree, Arrays.asList(1, 2, 3, 8, 11, 55)));
         System.out.println(JSON.toJSONString(node));
     }
 

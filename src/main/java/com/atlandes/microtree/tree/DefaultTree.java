@@ -6,7 +6,9 @@ import com.atlandes.microtree.pojo.Node;
 import com.atlandes.microtree.processor.Processor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -17,19 +19,63 @@ public class DefaultTree<T> implements Tree<T> {
 
     private Node<T> root;
 
+    private Map<Integer, Node<T>> nodeDict;
+
+    private List<Node<T>> nodeList;
+
     public DefaultTree() {
     }
 
     @Override
+    public Map<Integer, Node<T>> getNodeDict() {
+        if (nodeDict == null) {
+            nodeDict = new HashMap<>();
+            for (Node<T> node : nodeList) {
+                nodeDict.put(node.getId(), node);
+            }
+            return nodeDict;
+        }
+        return nodeDict;
+    }
+
+    @Override
+    public List<Node<T>> getNodeList() {
+        return nodeList;
+    }
+
+    @Override
     public Node<T> getRoot() {
-        return root;
+        return this.root;
     }
 
     @Override
     public Node<T> build(List<BusinessData<T>> businessData) {
-        List<Node<T>> nodeList = convertBusinessData2Node(businessData);
-        this.root = getRootNode(nodeList);
-        return recursiveRoot(this.root, nodeList);
+        this.nodeList = convertBusinessData2Node(businessData);
+        this.root = getRootNode(this.nodeList);
+        return recursiveRoot(this.root, this.nodeList);
+    }
+
+    @Override
+    public void downwardTravel(Node<T> curNode, Processor<T> processor) {
+        if (curNode == null) return;
+        processor.process(curNode);
+        for (Node<T> child : curNode.getChildren()) {
+            downwardTravel(child, processor);
+        }
+    }
+
+    @Override
+    public void downwardTravel(Processor<T> processor) {
+        downwardTravel(root, processor);
+    }
+
+    @Override
+    public void ancestorSearch(Node<T> curNode, Processor<T> processor) {
+        if (curNode == null) return;
+        processor.process(curNode);
+        if (curNode.getParent() != null) {
+            downwardTravel(nodeDict.get(curNode.getParent()), processor);
+        }
     }
 
     private List<Node<T>> convertBusinessData2Node(List<BusinessData<T>> businessDataList) {
@@ -85,20 +131,6 @@ public class DefaultTree<T> implements Tree<T> {
             curNode.getChildren().add(child);
         }
         return curNode;
-    }
-
-    @Override
-    public void travel(Node<T> curNode, Processor<T> processor) {
-        if (curNode == null) return;
-        processor.process(curNode);
-        for (Node<T> child : curNode.getChildren()) {
-            travel(child, processor);
-        }
-    }
-
-    @Override
-    public void travel(Processor<T> processor) {
-        travel(root, processor);
     }
 
 }

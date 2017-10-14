@@ -5,6 +5,7 @@ import com.atlandes.microtree.pojo.Node;
 import com.atlandes.microtree.processor.Processor;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by XD.Wang on 2017/10/14.
@@ -14,10 +15,16 @@ public interface Tree<T> {
 
     Node<T> build(List<BusinessData<T>> businessData);
 
+    Map<Integer, Node<T>> getNodeDict();
+
+    List<Node<T>> getNodeList();
+
     Node<T> getRoot();
 
-    void travel(Node<T> curNode, Processor<T> processor);
+    void downwardTravel(Node<T> curNode, Processor<T> processor);
 
-    void travel(Processor<T> processor);
+    void ancestorSearch(Node<T> curNode, Processor<T> processor);
+
+    void downwardTravel(Processor<T> processor);
 
 }
