@@ -17,13 +17,16 @@ import java.util.Objects;
  */
 public class DefaultTree<T> implements Tree<T> {
 
+    private Tree<T> tree;
+
     private Node<T> root;
 
     private Map<Integer, Node<T>> nodeDict;
 
     private List<Node<T>> nodeList;
 
-    public DefaultTree() {
+    public DefaultTree(List<BusinessData<T>> businessData) {
+        rebuild(businessData);
     }
 
     @Override
@@ -49,7 +52,7 @@ public class DefaultTree<T> implements Tree<T> {
     }
 
     @Override
-    public Node<T> build(List<BusinessData<T>> businessData) {
+    public Node<T> rebuild(List<BusinessData<T>> businessData) {
         this.nodeList = convertBusinessData2Node(businessData);
         this.root = getRootNode(this.nodeList);
         return recursiveRoot(this.root, this.nodeList);

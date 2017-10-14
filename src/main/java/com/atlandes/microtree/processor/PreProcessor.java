@@ -42,7 +42,7 @@ public abstract class PreProcessor<T> implements Processor<T> {
             handleSubCheck();
             handleDisplay();
         } else {
-            throw new TreeStateException("tree state not correct! do build method of tree before using it!");
+            throw new TreeStateException("tree state not correct! do rebuild method of tree before using it!");
         }
     }
 

@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface Tree<T> {
 
-    Node<T> build(List<BusinessData<T>> businessData);
+    Node<T> rebuild(List<BusinessData<T>> businessData);
 
     Map<Integer, Node<T>> getNodeDict();
 

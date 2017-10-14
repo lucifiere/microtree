@@ -18,10 +18,9 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-        DefaultTree tree = new DefaultTree();
-        Node node = tree.build(getTestData());
+        DefaultTree tree = new DefaultTree(getTestData());
         tree.downwardTravel(new DefaultPreProcessor(tree, Arrays.asList(1, 2, 3, 8, 11, 55)));
-        System.out.println(JSON.toJSONString(node));
+        System.out.println(JSON.toJSONString(tree.getRoot()));
     }
 
     public static List<BusinessData> getTestData() {
