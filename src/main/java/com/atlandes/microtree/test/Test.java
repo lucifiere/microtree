@@ -18,12 +18,13 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-        DefaultTree tree = new DefaultTree(getTestData());
+        List<BusinessData> testData = getTestData();
+        DefaultTree tree = new DefaultTree(testData);
         tree.downwardTravel(new DefaultPreProcessor(tree, Arrays.asList(1, 2, 3, 8, 11, 55)));
         System.out.println(JSON.toJSONString(tree.getRoot()));
     }
 
-    public static List<BusinessData> getTestData() {
+    private static List<BusinessData> getTestData() {
         List<BusinessData> list = new ArrayList<>();
         TestPO po1 = new TestPO();
         po1.setId(1);
