@@ -14,6 +14,8 @@ public interface Tree<T> {
 
     Node<T> build(List<BusinessData<T>> businessData);
 
-    void travel(Node<T> curNode, Processor processor);
+    void travel(Node<T> curNode, Processor<T> processor);
+
+    void travel(Processor<T> processor);
 
 }

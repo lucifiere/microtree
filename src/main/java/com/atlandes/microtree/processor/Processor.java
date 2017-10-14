@@ -1,11 +1,13 @@
 package com.atlandes.microtree.processor;
 
+import com.atlandes.microtree.pojo.Node;
+
 /**
  * Created by XD.Wang on 2017/10/14.
  * processor
  */
-public interface Processor {
+public interface Processor<T> {
 
-    void process();
+    void process(Node<T> node);
 
 }

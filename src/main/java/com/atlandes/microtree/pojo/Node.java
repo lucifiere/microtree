@@ -1,6 +1,6 @@
 package com.atlandes.microtree.pojo;
 
-import com.atlandes.microtree.constants.StatusEnum;
+import com.atlandes.microtree.constants.Enums;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +54,10 @@ public class Node<T> {
 
     public Node() {
         children = new ArrayList<>();
-        spread = StatusEnum.NO.ordinal();
-        check = StatusEnum.NO.ordinal();
-        display = StatusEnum.YES.ordinal();
-        halfChoice = StatusEnum.NO.ordinal();
+        spread = Enums.Spread.NO.ordinal();
+        check = Enums.Checked.NO.ordinal();
+        display = Enums.Display.YES.ordinal();
+        halfChoice = Enums.HalfChoose.NO.ordinal();
     }
 
     public Integer getId() {

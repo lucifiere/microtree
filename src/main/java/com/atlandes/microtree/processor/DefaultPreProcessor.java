@@ -1,5 +1,6 @@
 package com.atlandes.microtree.processor;
 
+import com.atlandes.microtree.constants.Enums;
 import com.atlandes.microtree.tree.DefaultTree;
 
 import java.util.List;
@@ -16,7 +17,9 @@ public class DefaultPreProcessor<T> extends PreProcessor<T> {
 
     @Override
     void handleCheck() {
-
+        if (checkedIdList.contains(currentNode.getId())) {
+            currentNode.setCheck(Enums.Checked.YES.ordinal());
+        }
     }
 
     @Override

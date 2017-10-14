@@ -87,12 +87,17 @@ public class DefaultTree<T> implements Tree<T> {
     }
 
     @Override
-    public void travel(Node<T> curNode, Processor processor) {
+    public void travel(Node<T> curNode, Processor<T> processor) {
         if (curNode == null) return;
-        processor.process();
+        processor.process(curNode);
         for (Node<T> child : curNode.getChildren()) {
             travel(child, processor);
         }
+    }
+
+    @Override
+    public void travel(Processor<T> processor) {
+        travel(root, processor);
     }
 
 }

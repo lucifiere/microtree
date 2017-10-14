@@ -3,21 +3,25 @@ package com.atlandes.microtree.test;
 import com.alibaba.fastjson.JSON;
 import com.atlandes.microtree.pojo.BusinessData;
 import com.atlandes.microtree.pojo.Node;
+import com.atlandes.microtree.processor.DefaultPreProcessor;
+import com.atlandes.microtree.processor.Processor;
 import com.atlandes.microtree.tree.DefaultTree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by XD.Wang on 2017/10/12.
  * to test it
  */
+@SuppressWarnings("unchecked")
 public class Test {
 
-    @SuppressWarnings("unchecked")
     public static void main(String[] args) {
         DefaultTree tree = new DefaultTree();
         Node node = tree.build(getTestData());
+        tree.travel(new DefaultPreProcessor(tree, Arrays.asList(1, 2, 3, 8, 11, 55)));
         System.out.println(JSON.toJSONString(node));
     }
 
