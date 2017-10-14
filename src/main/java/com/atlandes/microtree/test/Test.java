@@ -1,8 +1,7 @@
 package com.atlandes.microtree.test;
 
 import com.alibaba.fastjson.JSON;
-import com.atlandes.microtree.pojo.BusinessData;
-import com.atlandes.microtree.pojo.Node;
+import com.atlandes.microtree.data.BusinessData;
 import com.atlandes.microtree.processor.DefaultPreProcessor;
 import com.atlandes.microtree.tree.DefaultTree;
 

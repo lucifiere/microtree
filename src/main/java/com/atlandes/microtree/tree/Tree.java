@@ -1,7 +1,6 @@
 package com.atlandes.microtree.tree;
 
-import com.atlandes.microtree.pojo.BusinessData;
-import com.atlandes.microtree.pojo.Node;
+import com.atlandes.microtree.data.BusinessData;
 import com.atlandes.microtree.processor.Processor;
 
 import java.util.List;

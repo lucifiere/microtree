@@ -1,4 +1,4 @@
-package com.atlandes.microtree.pojo;
+package com.atlandes.microtree.data;
 
 /**
  * Created by XD.Wang on 2017/10/11.

@@ -1,4 +1,4 @@
-package com.atlandes.microtree.pojo;
+package com.atlandes.microtree.tree;
 
 import com.atlandes.microtree.constants.Enums;
 

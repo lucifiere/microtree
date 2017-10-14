@@ -1,7 +1,5 @@
 package com.atlandes.microtree.tree;
 
-import com.atlandes.microtree.pojo.Node;
-
 import java.util.List;
 
 /**

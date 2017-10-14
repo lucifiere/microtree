@@ -1,9 +1,10 @@
 package com.atlandes.microtree.test;
 
-import com.atlandes.microtree.pojo.BusinessData;
+import com.atlandes.microtree.data.BusinessData;
 
 /**
  * Created by XD.Wang on 2017/10/12.
+ * test
  */
 public class TestPO implements BusinessData {
 

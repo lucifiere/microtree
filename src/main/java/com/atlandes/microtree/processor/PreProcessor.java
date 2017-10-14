@@ -1,7 +1,7 @@
 package com.atlandes.microtree.processor;
 
 import com.atlandes.microtree.exception.TreeStateException;
-import com.atlandes.microtree.pojo.Node;
+import com.atlandes.microtree.tree.Node;
 import com.atlandes.microtree.tree.Family;
 import com.atlandes.microtree.tree.Tree;
 
