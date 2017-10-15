@@ -12,13 +12,17 @@ import java.util.Map;
  */
 public interface Tree<T> {
 
-    Node<T> rebuild(List<BusinessData<T>> businessData);
+    void rebuild(List<BusinessData<T>> businessData);
 
-    Map<Integer, Node<T>> getNodeDict();
+    Map<Integer, Node<T>> dict();
 
     List<Node<T>> getNodeList();
 
     Node<T> getRoot();
+
+    List<Node<T>> getAncestors();
+
+    List<Node<T>> getPosterity();
 
     void downwardTravel(Node<T> curNode, Processor<T> processor);
 

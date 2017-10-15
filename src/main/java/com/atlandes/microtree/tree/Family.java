@@ -1,5 +1,10 @@
 package com.atlandes.microtree.tree;
 
+import com.atlandes.microtree.constants.Enums;
+import com.atlandes.microtree.processor.DefaultNodeCollector;
+import com.atlandes.microtree.processor.NodeCollector;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,14 +13,29 @@ import java.util.List;
  */
 public class Family<T> {
 
+    private Tree<T> tree;
     private Node<T> self;
     private Node<T> parent;
-    private List<Node<T>> grandparents;
+    private List<Node<T>> ancestors;
     private List<Node<T>> son;
-    private List<Node<T>> grandsons;
+    private List<Node<T>> posterity;
     private List<Node<T>> family;
 
+    public Family(Tree<T> tree) {
+        this.tree = tree;
+    }
+
     public void analysis(Node<T> curNode) {
+        NodeCollector<T> collector = new DefaultNodeCollector<>(this.tree);
+        self = curNode;
+        collector.setCollectType(Enums.CollectType.RELATION_ANCESTOR).process(curNode);
+        ancestors = collector.get().orElse(new ArrayList<>());
+        collector.setCollectType(Enums.CollectType.RELATION_POSTERITY).process(curNode);
+        posterity = collector.get().orElse(new ArrayList<>());
+        collector.setCollectType(Enums.CollectType.RELATION_PARENT).process(curNode);
+        parent = collector.get().isPresent() ? collector.get().get().get(0) : null;
+        collector.setCollectType(Enums.CollectType.RELATION_SON).process(curNode);
+        son = collector.get().orElse(new ArrayList<>());
     }
 
     public Node<T> getSelf() {
@@ -34,12 +54,12 @@ public class Family<T> {
         this.parent = parent;
     }
 
-    public List<Node<T>> getGrandparents() {
-        return grandparents;
+    public List<Node<T>> getAncestors() {
+        return ancestors;
     }
 
-    public void setGrandparents(List<Node<T>> grandparents) {
-        this.grandparents = grandparents;
+    public void setAncestors(List<Node<T>> ancestors) {
+        this.ancestors = ancestors;
     }
 
     public List<Node<T>> getSon() {
@@ -50,12 +70,12 @@ public class Family<T> {
         this.son = son;
     }
 
-    public List<Node<T>> getGrandsons() {
-        return grandsons;
+    public List<Node<T>> getPosterity() {
+        return posterity;
     }
 
-    public void setGrandsons(List<Node<T>> grandsons) {
-        this.grandsons = grandsons;
+    public void setPosterity(List<Node<T>> posterity) {
+        this.posterity = posterity;
     }
 
     public List<Node<T>> getFamily() {

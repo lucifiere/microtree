@@ -3,6 +3,7 @@ package com.atlandes.microtree.tree;
 import com.atlandes.microtree.constants.Config;
 import com.atlandes.microtree.data.BusinessData;
 import com.atlandes.microtree.processor.Processor;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,15 +30,15 @@ public class DefaultTree<T> implements Tree<T> {
     }
 
     @Override
-    public Map<Integer, Node<T>> getNodeDict() {
-        if (nodeDict == null) {
+    public Map<Integer, Node<T>> dict() {
+        if (nodeDict == null && !CollectionUtils.isEmpty(nodeList)) {
             nodeDict = new HashMap<>();
             for (Node<T> node : nodeList) {
                 nodeDict.put(node.getId(), node);
             }
             return nodeDict;
         }
-        return nodeDict;
+        return new HashMap<>();
     }
 
     @Override
@@ -51,15 +52,26 @@ public class DefaultTree<T> implements Tree<T> {
     }
 
     @Override
-    public Node<T> rebuild(List<BusinessData<T>> businessData) {
+    public List<Node<T>> getAncestors() {
+        return null;
+    }
+
+    @Override
+    public List<Node<T>> getPosterity() {
+        return null;
+    }
+
+    @Override
+    public void rebuild(List<BusinessData<T>> businessData) {
         this.nodeList = convertBusinessData2Node(businessData);
         this.root = getRootNode(this.nodeList);
-        return recursiveRoot(this.root, this.nodeList);
+        recursiveRoot(this.root, this.nodeList);
     }
 
     @Override
     public void downwardTravel(Node<T> curNode, Processor<T> processor) {
         if (curNode == null) return;
+        if (processor == null) throw new IllegalArgumentException("processor can not be null!");
         processor.process(curNode);
         for (Node<T> child : curNode.getChildren()) {
             downwardTravel(child, processor);
@@ -74,6 +86,7 @@ public class DefaultTree<T> implements Tree<T> {
     @Override
     public void ancestorSearch(Node<T> curNode, Processor<T> processor) {
         if (curNode == null) return;
+        if (processor == null) throw new IllegalArgumentException("processor can not be null!");
         processor.process(curNode);
         if (curNode.getParent() != null) {
             downwardTravel(nodeDict.get(curNode.getParent()), processor);

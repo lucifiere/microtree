@@ -14,4 +14,13 @@ public class Enums {
 
     public enum HalfChoose {NO, YES}
 
+    public enum CollectType {
+        RELATION_PARENT,
+        RELATION_SON,
+        RELATION_GRANDPARENT,
+        RELATION_GRANDSON,
+        RELATION_ANCESTOR,
+        RELATION_POSTERITY
+    }
+
 }

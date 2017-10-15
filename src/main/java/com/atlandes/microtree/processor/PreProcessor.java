@@ -1,5 +1,6 @@
 package com.atlandes.microtree.processor;
 
+import com.atlandes.microtree.constants.Enums;
 import com.atlandes.microtree.exception.TreeStateException;
 import com.atlandes.microtree.tree.Node;
 import com.atlandes.microtree.tree.Family;
@@ -17,20 +18,25 @@ public abstract class PreProcessor<T> implements Processor<T> {
     protected List<Integer> checkedIdList;
 
     protected Node<T> currentNode;
-    protected Family<T> family = new Family<>();
+    protected Family<T> family;
 
     public PreProcessor(Tree<T> tree, List<Integer> checkedIdList) {
         this.tree = tree;
+        this.family = new Family<>(tree);
         this.checkedIdList = checkedIdList;
     }
 
-    abstract void handleCheck();
+    protected void handleCheck() {
+        if (checkedIdList.contains(currentNode.getId())) {
+            currentNode.setCheck(Enums.Checked.YES.ordinal());
+        }
+    }
 
-    abstract void handleSubCheck();
+    protected abstract void handleSubCheck();
 
-    abstract void handleSpread();
+    protected abstract void handleSpread();
 
-    abstract void handleDisplay();
+    protected abstract void handleDisplay();
 
     @Override
     public void process(Node<T> node) {
