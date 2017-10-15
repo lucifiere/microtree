@@ -2,8 +2,8 @@ package com.atlandes.microtree.processor;
 
 import com.atlandes.microtree.constants.Enums;
 import com.atlandes.microtree.exception.TreeStateException;
-import com.atlandes.microtree.tree.Node;
 import com.atlandes.microtree.tree.Family;
+import com.atlandes.microtree.tree.Node;
 import com.atlandes.microtree.tree.Tree;
 
 import java.util.List;

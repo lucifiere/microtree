@@ -20,9 +20,9 @@ public interface Tree<T> {
 
     Node<T> getRoot();
 
-    List<Node<T>> getAncestors();
+    List<Node<T>> getAncestors(Node<T> origin);
 
-    List<Node<T>> getPosterity();
+    List<Node<T>> getPosterity(Node<T> origin);
 
     void downwardTravel(Node<T> curNode, Processor<T> processor);
 

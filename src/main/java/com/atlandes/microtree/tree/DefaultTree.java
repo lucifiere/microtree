@@ -1,7 +1,10 @@
 package com.atlandes.microtree.tree;
 
 import com.atlandes.microtree.constants.Config;
+import com.atlandes.microtree.constants.Enums;
 import com.atlandes.microtree.data.BusinessData;
+import com.atlandes.microtree.processor.DefaultNodeCollector;
+import com.atlandes.microtree.processor.NodeCollector;
 import com.atlandes.microtree.processor.Processor;
 import org.springframework.util.CollectionUtils;
 
@@ -24,6 +27,8 @@ public class DefaultTree<T> implements Tree<T> {
     private Map<Integer, Node<T>> nodeDict;
 
     private List<Node<T>> nodeList;
+
+    private NodeCollector<T> collector;
 
     public DefaultTree(List<BusinessData<T>> businessData) {
         rebuild(businessData);
@@ -52,19 +57,22 @@ public class DefaultTree<T> implements Tree<T> {
     }
 
     @Override
-    public List<Node<T>> getAncestors() {
-        return null;
+    public List<Node<T>> getAncestors(Node<T> origin) {
+        collector.setCollectType(Enums.CollectType.RELATION_ANCESTOR).process(origin);
+        return collector.get().orElse(new ArrayList<>());
     }
 
     @Override
-    public List<Node<T>> getPosterity() {
-        return null;
+    public List<Node<T>> getPosterity(Node<T> origin) {
+        collector.setCollectType(Enums.CollectType.RELATION_POSTERITY).process(origin);
+        return collector.get().orElse(new ArrayList<>());
     }
 
     @Override
     public void rebuild(List<BusinessData<T>> businessData) {
         this.nodeList = convertBusinessData2Node(businessData);
         this.root = getRootNode(this.nodeList);
+        this.collector = new DefaultNodeCollector<>(this.tree);
         recursiveRoot(this.root, this.nodeList);
     }
 
