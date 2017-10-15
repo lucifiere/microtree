@@ -8,9 +8,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>$Title$</title>
+    <title>演示</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
+          type="text/css"/>
 </head>
 <body>
-$END$
+
+<div class="container">
+
+    <div class="container">
+        <h1>DEMO PAGE</h1>
+        <div class="row" id="treeContainer">
+        </div>
+    </div>
+
+</div>
+
 </body>
 </html>
