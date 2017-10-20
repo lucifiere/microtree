@@ -43,7 +43,7 @@ public class DefaultTree<T> implements Tree<T> {
             }
             return nodeDict;
         }
-        return new HashMap<>();
+        return nodeDict;
     }
 
     @Override
