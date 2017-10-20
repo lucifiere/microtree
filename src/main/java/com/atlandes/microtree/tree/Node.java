@@ -48,6 +48,14 @@ public class Node<T> {
      */
     private List<Node<T>> children;
     /**
+     * node ancestor
+     */
+    private List<Node<T>> ancestor;
+    /**
+     * node posterity
+     */
+    private List<Node<T>> posterity;
+    /**
      * business data
      */
     private T data;
@@ -130,6 +138,22 @@ public class Node<T> {
 
     public void setChildren(List<Node<T>> children) {
         this.children = children;
+    }
+
+    public List<Node<T>> getAncestor() {
+        return ancestor;
+    }
+
+    public void setAncestor(List<Node<T>> ancestor) {
+        this.ancestor = ancestor;
+    }
+
+    public List<Node<T>> getPosterity() {
+        return posterity;
+    }
+
+    public void setPosterity(List<Node<T>> posterity) {
+        this.posterity = posterity;
     }
 
     public T getData() {

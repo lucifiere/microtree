@@ -57,4 +57,9 @@ public class TestPO implements BusinessData {
     public void setLevel(Integer level) {
         this.level = level;
     }
+
+    public static void main(String[] args) {
+
+    }
+
 }

@@ -72,8 +72,9 @@ public class DefaultTree<T> implements Tree<T> {
     public void rebuild(List<BusinessData<T>> businessData) {
         this.nodeList = convertBusinessData2Node(businessData);
         this.root = getRootNode(this.nodeList);
-        this.collector = new DefaultNodeCollector<>(this.tree);
-        recursiveRoot(this.root, this.nodeList);
+        recursiveRoot();
+        this.collector = new DefaultNodeCollector<>(this);
+        setNodeRelation();
     }
 
     @Override
@@ -126,19 +127,19 @@ public class DefaultTree<T> implements Tree<T> {
         return root;
     }
 
-    private Node<T> recursiveRoot(Node<T> rootNode, List<Node<T>> allNode) {
+    private Node<T> recursiveRoot() {
         List<Node<T>> heightLevelNodes = new ArrayList<>();
-        for (Node<T> node : allNode) {
+        for (Node<T> node : this.nodeList) {
             if (node.getParent() == null) {
                 node.setLevel(Config.HIGHEST_LEVEL);
                 heightLevelNodes.add(node);
             }
         }
         for (Node<T> heightLevelNode : heightLevelNodes) {
-            recursiveNode(heightLevelNode, allNode);
+            recursiveNode(heightLevelNode, this.nodeList);
         }
-        rootNode.setChildren(heightLevelNodes);
-        return rootNode;
+        this.root.setChildren(heightLevelNodes);
+        return this.root;
     }
 
     private Node<T> recursiveNode(Node<T> curNode, List<Node<T>> allNode) {
@@ -154,6 +155,15 @@ public class DefaultTree<T> implements Tree<T> {
             curNode.getChildren().add(child);
         }
         return curNode;
+    }
+
+    private void setNodeRelation() {
+        for (Node<T> node : this.nodeList) {
+            this.collector.setCollectType(Enums.CollectType.RELATION_ANCESTOR).process(node);
+            node.setAncestor(this.collector.get().orElse(null));
+            this.collector.setCollectType(Enums.CollectType.RELATION_POSTERITY).process(node);
+            node.setPosterity(this.collector.get().orElse(null));
+        }
     }
 
 }

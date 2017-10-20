@@ -19,7 +19,7 @@ public class DefaultNodeCollector<T> implements NodeCollector<T> {
     private Node<T> origin;
     private Tree<T> tree;
     private Enums.CollectType collectType;
-    private List<Node<T>> nodes;
+    private List<Node<T>> nodes = new ArrayList<>();
 
     public DefaultNodeCollector(Tree<T> tree) {
         this.tree = tree;

@@ -18,7 +18,7 @@
 
     <div class="container">
         <h1>DEMO PAGE</h1>
-        <div class="row" id="treeContainer">
+        <div class="row" id="microtreeContainer">
         </div>
     </div>
 
