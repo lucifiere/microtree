@@ -18,7 +18,7 @@
 <div class="container">
 
     <div class="container">
-        <h1>DEMO PAGE</h1>
+        <h1 style="font-family: 'Comic Sans MS',serif; color: forestgreen">DEMO PAGE</h1>
         <div class="row" id="microtreeContainer">
         </div>
     </div>
