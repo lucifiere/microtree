@@ -57,13 +57,13 @@ public class DefaultTree<T> implements Tree<T> {
     }
 
     @Override
-    public List<Node<T>> getAncestors(Node<T> origin) {
+    public List<Integer> getAncestors(Node<T> origin) {
         collector.setCollectType(Enums.CollectType.RELATION_ANCESTOR).process(origin);
         return collector.get().orElse(new ArrayList<>());
     }
 
     @Override
-    public List<Node<T>> getPosterity(Node<T> origin) {
+    public List<Integer> getPosterity(Node<T> origin) {
         collector.setCollectType(Enums.CollectType.RELATION_POSTERITY).process(origin);
         return collector.get().orElse(new ArrayList<>());
     }

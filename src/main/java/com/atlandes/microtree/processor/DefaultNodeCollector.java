@@ -1,11 +1,13 @@
 package com.atlandes.microtree.processor;
 
 import com.atlandes.microtree.constants.Enums;
+import com.atlandes.microtree.exception.TreeStateException;
 import com.atlandes.microtree.tree.Node;
 import com.atlandes.microtree.tree.Tree;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +21,14 @@ public class DefaultNodeCollector<T> implements NodeCollector<T> {
     private Node<T> origin;
     private Tree<T> tree;
     private Enums.CollectType collectType;
-    private List<Node<T>> nodes = new ArrayList<>();
+    private List<Integer> nodes = new ArrayList<>();
 
     public DefaultNodeCollector(Tree<T> tree) {
-        this.tree = tree;
+        if (tree != null && tree.getRoot() != null && tree.getNodeList() != null) {
+            this.tree = tree;
+        } else {
+            throw new TreeStateException("collector can not use with a uninitialized tree!");
+        }
     }
 
     public DefaultNodeCollector(Tree<T> tree, Enums.CollectType collectType) {
@@ -42,8 +48,8 @@ public class DefaultNodeCollector<T> implements NodeCollector<T> {
     }
 
     @Override
-    public Optional<List<Node<T>>> get() {
-        return Optional.ofNullable(nodes);
+    public Optional<List<Integer>> get() {
+        return Optional.ofNullable(nodes.size() > 0 ? new ArrayList<>(nodes) : null);
     }
 
     private void resetCursor() {
@@ -85,7 +91,7 @@ public class DefaultNodeCollector<T> implements NodeCollector<T> {
         if (this.cursor != null) {
             Node<T> parent = tree.dict().get(cursor.getParent());
             if (parent != null) {
-                nodes.add(parent);
+                nodes.add(parent.getId());
                 cursor = parent;
                 collectAncestors();
             }
@@ -93,10 +99,13 @@ public class DefaultNodeCollector<T> implements NodeCollector<T> {
     }
 
     private void collectPosterity() {
-        if (this.cursor != null) {
+        if (cursor != null && cursor.getId() != null) {
+            System.out.println(cursor.getId());
             List<Node<T>> children = tree.dict().get(cursor.getId()).getChildren();
             if (!CollectionUtils.isEmpty(children)) {
-                nodes.addAll(children);
+                List<Integer> nodeIdList = new ArrayList<>();
+                children.forEach(v -> nodeIdList.add(v.getId()));
+                nodes.addAll(nodeIdList);
                 for (Node<T> child : children) {
                     cursor = child;
                     collectPosterity();

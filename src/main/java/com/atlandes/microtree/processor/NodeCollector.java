@@ -12,7 +12,7 @@ import java.util.Optional;
  */
 public interface NodeCollector<T> extends Processor<T> {
 
-    Optional<List<Node<T>>> get();
+    Optional<List<Integer>> get();
 
     Enums.CollectType getCollectType();
 

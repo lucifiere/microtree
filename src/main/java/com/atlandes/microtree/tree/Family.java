@@ -14,12 +14,12 @@ import java.util.List;
 public class Family<T> {
 
     private Tree<T> tree;
-    private Node<T> self;
-    private Node<T> parent;
-    private List<Node<T>> ancestors;
-    private List<Node<T>> son;
-    private List<Node<T>> posterity;
-    private List<Node<T>> family;
+    private Integer self;
+    private Integer parent;
+    private List<Integer> ancestors;
+    private List<Integer> son;
+    private List<Integer> posterity;
+    private List<Integer> family;
 
     public Family(Tree<T> tree) {
         this.tree = tree;
@@ -27,7 +27,7 @@ public class Family<T> {
 
     public void analysis(Node<T> curNode) {
         NodeCollector<T> collector = new DefaultNodeCollector<>(this.tree);
-        self = curNode;
+        self = curNode.getId();
         collector.setCollectType(Enums.CollectType.RELATION_ANCESTOR).process(curNode);
         ancestors = collector.get().orElse(new ArrayList<>());
         collector.setCollectType(Enums.CollectType.RELATION_POSTERITY).process(curNode);
@@ -38,51 +38,59 @@ public class Family<T> {
         son = collector.get().orElse(new ArrayList<>());
     }
 
-    public Node<T> getSelf() {
+    public Tree<T> getTree() {
+        return tree;
+    }
+
+    public void setTree(Tree<T> tree) {
+        this.tree = tree;
+    }
+
+    public Integer getSelf() {
         return self;
     }
 
-    public void setSelf(Node<T> self) {
+    public void setSelf(Integer self) {
         this.self = self;
     }
 
-    public Node<T> getParent() {
+    public Integer getParent() {
         return parent;
     }
 
-    public void setParent(Node<T> parent) {
+    public void setParent(Integer parent) {
         this.parent = parent;
     }
 
-    public List<Node<T>> getAncestors() {
+    public List<Integer> getAncestors() {
         return ancestors;
     }
 
-    public void setAncestors(List<Node<T>> ancestors) {
+    public void setAncestors(List<Integer> ancestors) {
         this.ancestors = ancestors;
     }
 
-    public List<Node<T>> getSon() {
+    public List<Integer> getSon() {
         return son;
     }
 
-    public void setSon(List<Node<T>> son) {
+    public void setSon(List<Integer> son) {
         this.son = son;
     }
 
-    public List<Node<T>> getPosterity() {
+    public List<Integer> getPosterity() {
         return posterity;
     }
 
-    public void setPosterity(List<Node<T>> posterity) {
+    public void setPosterity(List<Integer> posterity) {
         this.posterity = posterity;
     }
 
-    public List<Node<T>> getFamily() {
+    public List<Integer> getFamily() {
         return family;
     }
 
-    public void setFamily(List<Node<T>> family) {
+    public void setFamily(List<Integer> family) {
         this.family = family;
     }
 }
