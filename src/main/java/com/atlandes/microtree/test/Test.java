@@ -87,6 +87,73 @@ public class Test {
         po11.setName("番禺区");
         po11.setParent(7);
         list.add(po11);
+
+        TestPO po12 = new TestPO();
+        po12.setId(12);
+        po12.setName("雁塔区");
+        po12.setParent(15);
+        list.add(po12);
+
+        TestPO po13 = new TestPO();
+        po13.setId(13);
+        po13.setName("未央区");
+        po13.setParent(15);
+        list.add(po13);
+
+        TestPO po14 = new TestPO();
+        po14.setId(14);
+        po14.setName("碑林区");
+        po14.setParent(15);
+        list.add(po14);
+
+        TestPO po15 = new TestPO();
+        po15.setId(15);
+        po15.setName("西安");
+        po15.setParent(4);
+        list.add(po15);
+
+        TestPO po16 = new TestPO();
+        po16.setId(16);
+        po16.setName("关东地方");
+        po16.setParent(3);
+        list.add(po16);
+
+        TestPO po17 = new TestPO();
+        po17.setId(17);
+        po17.setName("近畿地方");
+        po17.setParent(3);
+        list.add(po17);
+
+        TestPO po18 = new TestPO();
+        po18.setId(18);
+        po18.setName("东京");
+        po18.setParent(16);
+        list.add(po18);
+
+        TestPO po19 = new TestPO();
+        po19.setId(19);
+        po19.setName("神奈川");
+        po19.setParent(16);
+        list.add(po19);
+
+        TestPO po20 = new TestPO();
+        po20.setId(20);
+        po20.setName("大阪");
+        po20.setParent(17);
+        list.add(po20);
+
+        TestPO po21 = new TestPO();
+        po21.setId(21);
+        po21.setName("涩谷区");
+        po21.setParent(18);
+        list.add(po21);
+
+        TestPO po22 = new TestPO();
+        po22.setId(22);
+        po22.setName("江户川区");
+        po22.setParent(18);
+        list.add(po22);
+
         return list;
     }
 
