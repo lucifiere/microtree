@@ -7,7 +7,6 @@ import com.atlandes.microtree.tree.Tree;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +48,7 @@ public class DefaultNodeCollector<T> implements NodeCollector<T> {
 
     @Override
     public Optional<List<Integer>> get() {
-        return Optional.ofNullable(nodes.size() > 0 ? new ArrayList<>(nodes) : null);
+        return Optional.of(nodes.size() > 0 ? new ArrayList<>(nodes) : new ArrayList<>());
     }
 
     private void resetCursor() {
@@ -100,7 +99,6 @@ public class DefaultNodeCollector<T> implements NodeCollector<T> {
 
     private void collectPosterity() {
         if (cursor != null && cursor.getId() != null) {
-            System.out.println(cursor.getId());
             List<Node<T>> children = tree.dict().get(cursor.getId()).getChildren();
             if (!CollectionUtils.isEmpty(children)) {
                 List<Integer> nodeIdList = new ArrayList<>();

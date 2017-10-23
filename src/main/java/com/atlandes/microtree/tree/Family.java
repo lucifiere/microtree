@@ -33,7 +33,7 @@ public class Family<T> {
         collector.setCollectType(Enums.CollectType.RELATION_POSTERITY).process(curNode);
         posterity = collector.get().orElse(new ArrayList<>());
         collector.setCollectType(Enums.CollectType.RELATION_PARENT).process(curNode);
-        parent = collector.get().isPresent() ? collector.get().get().get(0) : null;
+        parent = collector.get().isPresent() && collector.get().get().size() > 0 ? collector.get().get().get(0) : null;
         collector.setCollectType(Enums.CollectType.RELATION_SON).process(curNode);
         son = collector.get().orElse(new ArrayList<>());
     }
