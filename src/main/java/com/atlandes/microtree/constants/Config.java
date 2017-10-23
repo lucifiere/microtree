@@ -12,4 +12,6 @@ public interface Config {
 
     int STEP = 1;
 
+    String ID_SEP = ",";
+
 }

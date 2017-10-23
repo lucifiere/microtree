@@ -1,7 +1,6 @@
 package com.atlandes.microtree.processor;
 
 import com.atlandes.microtree.constants.Enums;
-import com.atlandes.microtree.tree.Node;
 
 import java.util.List;
 import java.util.Optional;

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script src="${pageContext.request.contextPath}/static/lib/jquery.min.js"></script>
 <html>
 <head>
     <title>演示</title>
@@ -25,4 +26,5 @@
 </div>
 
 </body>
+<script src="${pageContext.request.contextPath}/static/js/microtree.js" type="text/javascript"></script>
 </html>

@@ -1,11 +1,15 @@
 package com.atlandes.microtree.processor;
 
+import com.atlandes.microtree.constants.Config;
 import com.atlandes.microtree.constants.Enums;
 import com.atlandes.microtree.exception.TreeStateException;
+import com.atlandes.microtree.tree.DefaultTree;
 import com.atlandes.microtree.tree.Family;
 import com.atlandes.microtree.tree.Node;
 import com.atlandes.microtree.tree.Tree;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,8 +30,22 @@ public abstract class PreProcessor<T> implements Processor<T> {
         this.checkedIdList = checkedIdList;
     }
 
+    public PreProcessor(Tree<T> tree, String checkedIdListStr) {
+        List<Integer> checkedIdList = null;
+        if (StringUtils.isNotBlank(checkedIdListStr)) {
+            checkedIdList = new ArrayList<>();
+            String[] idArray = checkedIdListStr.split(Config.ID_SEP);
+            for (String id : idArray) {
+                checkedIdList.add(Integer.valueOf(id));
+            }
+        }
+        this.tree = tree;
+        this.family = new Family<>(tree);
+        this.checkedIdList = checkedIdList;
+    }
+
     protected void handleCheck() {
-        if (checkedIdList.contains(currentNode.getId())) {
+        if (checkedIdList != null && checkedIdList.contains(currentNode.getId())) {
             currentNode.setCheck(Enums.Checked.YES.ordinal());
         }
     }

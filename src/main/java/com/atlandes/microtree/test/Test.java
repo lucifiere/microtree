@@ -23,7 +23,7 @@ public class Test {
         System.out.println(JSON.toJSONString(tree.getRoot()));
     }
 
-    private static List<BusinessData> getTestData() {
+    public static List<BusinessData> getTestData() {
         List<BusinessData> list = new ArrayList<>();
         TestPO po1 = new TestPO();
         po1.setId(1);

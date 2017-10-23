@@ -31,5 +31,3 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
-
-<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
