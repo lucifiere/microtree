@@ -48,7 +48,7 @@ public class DefaultNodeCollector<T> implements NodeCollector<T> {
 
     @Override
     public Optional<List<Integer>> get() {
-        return Optional.of(nodes.size() > 0 ? new ArrayList<>(nodes) : new ArrayList<>());
+        return Optional.ofNullable(nodes.size() > 0 ? new ArrayList<>(nodes) : null);
     }
 
     private void resetCursor() {
@@ -113,11 +113,20 @@ public class DefaultNodeCollector<T> implements NodeCollector<T> {
     }
 
     private void collectSon() {
-
+        if (cursor != null && cursor.getId() != null) {
+            List<Node<T>> children = tree.dict().get(cursor.getId()).getChildren();
+            if (!CollectionUtils.isEmpty(children)) {
+                List<Integer> nodeIdList = new ArrayList<>();
+                children.forEach(v -> nodeIdList.add(v.getId()));
+                nodes.addAll(nodeIdList);
+            }
+        }
     }
 
     private void collectParent() {
-
+        if (cursor != null && cursor.getParent() != null) {
+            nodes.add(tree.dict().get(cursor.getParent()).getId());
+        }
     }
 
     private void collectGrandson() {

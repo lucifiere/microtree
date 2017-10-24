@@ -1,11 +1,7 @@
 package com.atlandes.microtree.processor;
 
-import com.atlandes.microtree.constants.Config;
-import com.atlandes.microtree.tree.DefaultTree;
 import com.atlandes.microtree.tree.Tree;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

@@ -12,6 +12,8 @@
     <title>演示</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
           type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/microtree.css"
+          type="text/css"/>
 </head>
 <body>
 

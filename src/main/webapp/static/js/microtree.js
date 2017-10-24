@@ -109,7 +109,7 @@ var HTML = {
     /**
      * generate br HTML from setting
      */
-    genBrHTML: function () {
+    genBrHTML: function (node) {
         return $("<br>").attr({
             "nodeID": node.id,
             "display": node.display,
@@ -119,13 +119,42 @@ var HTML = {
 
 };
 
-var node = {
+/**
+ * handle node select
+ * @type {{checkboxLinkageType: string, radioLinkageType: string, selectCATG: nodeSelector.selectCATG}}
+ */
+var nodeSelector = {
+    /**
+     * the way to influencing other node when selecting a checkbox node
+     * @enum [string]
+     *
+     * 1. "down": the node with high level do lead to the node with lower level be checked.
+     * 2. "up": the node with low level do lead to the node with higher level be checked, and only when the latter one has
+     *          direct relation to the former.
+     * 3. "none": without any linkage relation.
+     */
+    checkboxLinkageType: "down",
+    /**
+     * the way to select a radio node
+     * @enum [string]
+     *
+     * 1. "unique": only one data can be checked
+     * 2. "level-unique": within the same level, only one data can be checked
+     */
+    radioLinkageType: "level-unique",
     /**
      * function after selecting a category
      */
     selectCATG: function (_this) {
 
-    },
+    }
+};
+
+/**
+ * handle node toggle including spread and shrink
+ * @type {{toggleCATG: nodeToggle.toggleCATG}}
+ */
+var nodeToggle = {
     /**
      * function when toggling a category
      */
@@ -134,8 +163,16 @@ var node = {
     }
 };
 
+
 var tree = {
+    /**
+     * container of the tree
+     */
     container: null,
+    /**
+     * tree data
+     */
+    tree: null,
     /**
      * base tree setting
      */
@@ -184,6 +221,7 @@ var tree = {
                 tree.setting.checkedIDList.push(v);
             });
         }
+        container.addClass("microtreeContainer");
         return true;
     },
     /**
@@ -213,9 +251,14 @@ var tree = {
 };
 /**
  * some utils
- * @type {{joinCheckedId: utils.joinCheckedId}}
+ * @type {{isNull: utils.isNull}}
  */
 var utils = {
+    /**
+     *  confirm whether null
+     * @param value
+     * @returns {boolean}
+     */
     isNull: function (value) {
         return value == null || $.trim(value) == '' || $.trim(value) == 'null' ||
             $.trim(value) == 'NULL' || typeof(value) == 'undefined';

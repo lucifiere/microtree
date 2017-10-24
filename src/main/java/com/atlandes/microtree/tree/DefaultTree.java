@@ -20,8 +20,6 @@ import java.util.Objects;
  */
 public class DefaultTree<T> implements Tree<T> {
 
-    private Tree<T> tree;
-
     private Node<T> root;
 
     private Map<Integer, Node<T>> nodeDict;
@@ -158,11 +156,11 @@ public class DefaultTree<T> implements Tree<T> {
     }
 
     private void setNodeRelation() {
-        for (Node<T> node : this.nodeList) {
+        for (Node<T> node : nodeList) {
             this.collector.setCollectType(Enums.CollectType.RELATION_ANCESTOR).process(node);
-            node.setAncestor(this.collector.get().orElse(null));
+            node.setAncestor(collector.get().orElse(null));
             this.collector.setCollectType(Enums.CollectType.RELATION_POSTERITY).process(node);
-            node.setPosterity(this.collector.get().orElse(null));
+            node.setPosterity(collector.get().orElse(null));
         }
     }
 
