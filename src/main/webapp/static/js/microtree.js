@@ -121,33 +121,93 @@ var HTML = {
 
 /**
  * handle node select
- * @type {{checkboxLinkageType: string, radioLinkageType: string, selectCATG: nodeSelector.selectCATG}}
  */
 var nodeSelector = {
     /**
-     * the way to influencing other node when selecting a checkbox node
-     * @enum [string]
-     *
-     * 1. "down": the node with high level do lead to the node with lower level be checked.
-     * 2. "up": the node with low level do lead to the node with higher level be checked, and only when the latter one has
-     *          direct relation to the former.
-     * 3. "none": without any linkage relation.
+     * to analysis node relation
      */
-    checkboxLinkageType: "down",
-    /**
-     * the way to select a radio node
-     * @enum [string]
-     *
-     * 1. "unique": only one data can be checked
-     * 2. "level-unique": within the same level, only one data can be checked
-     */
-    radioLinkageType: "level-unique",
+    currentNode: {
+        self: null,
+        ancestor: null,
+        posterity: null,
+        brother: null,
+        setRelation: function (_this) {
+            this.self = $(_this).prop("value");
+            var node = tree.dict[this.self];
+            if (utils.isNotNull(node)) {
+                this.ancestor = node.ancestor;
+                this.posterity = node.posterity;
+            }
+        }
+    },
     /**
      * function after selecting a category
      */
-    selectCATG: function (_this) {
+    handle: function (_this) {
 
+    },
+    checkboxHandler: {
+        /**
+         * the way to influencing other node when selecting a checkbox node
+         * @enum [string]
+         *
+         * 1. "down": the node with high level do lead to the node with lower level be checked.
+         * 2. "up": the node with low level do lead to the node with higher level be checked, and only when the latter one has
+         *          direct relation to the former.
+         * 3. "none": without any linkage relation.
+         */
+        checkboxLinkageType: "down",
+        selectCATG: function (_this) {
+            this.currentNode.setRelation(_this);
+            if (this.checkboxLinkageType == "down") {
+                this.downStrategy(_this);
+            } else if (this.checkboxLinkageType == "up") {
+                this.upStrategy(_this);
+            } else if (this.checkboxLinkageType == "none") {
+                this.noneStrategy(_this);
+            }
+        },
+        downStrategy: function (_this) {
+            var curNode = nodeSelector.currentNode;
+            if ($(_this).prop("checked")) {
+                curNode.posterity.each(function () {
+                    var posterity = $("input[nodeID=" + curNode.self + "]");
+                    posterity.prop("checked", true);
+                });
+            } else {
+                curNode.posterity.each(function () {
+                    var posterity = $("input[nodeID=" + curNode.self + "]");
+                    posterity.prop("checked", false);
+                });
+            }
+        },
+        upStrategy: function (_this) {
+
+        },
+        noneStrategy: function (_this) {
+
+        }
+    },
+    radioHandler: {
+        /**
+         * the way to select a radio node
+         * @enum [string]
+         *
+         * 1. "unique": only one data can be checked
+         * 2. "level-unique": within the same level, only one data can be checked
+         */
+        radioLinkageType: "level-unique",
+        selectCATG: function (_this) {
+
+        },
+        uniqueStrategy: function (_this) {
+
+        },
+        levelUniqueStrategy: function (_this) {
+
+        }
     }
+
 };
 
 /**
@@ -174,6 +234,10 @@ var tree = {
      */
     tree: null,
     /**
+     * tree data
+     */
+    dict: null,
+    /**
      * base tree setting
      */
     setting: {
@@ -195,9 +259,11 @@ var tree = {
                 url: "/microtree/getTree.do?ids=" + setting.checkedIDList.join(","),
                 dataType: 'json',
                 async: false,
-                success: function (root) {
-                    if (!utils.isNull(root)) {
-                        tree.container.html(tree.buildTree(root.children));
+                success: function (result) {
+                    if (utils.isNotNull(result.root)) {
+                        tree.tree = result.root.children;
+                        tree.dict = result.dict;
+                        tree.container.html(tree.buildTree(tree.tree));
                     } else {
                         alert("load tree failed！");
                     }
@@ -216,7 +282,7 @@ var tree = {
         }
         tree.container = container;
         var checkedID = container.attr("checkedID");
-        if (!utils.isNull(checkedID)) {
+        if (utils.isNotNull(checkedID)) {
             checkedID.split(",").forEach(function (v) {
                 tree.setting.checkedIDList.push(v);
             });
@@ -242,7 +308,7 @@ var tree = {
             }
 
             var children = node.children;
-            if (!utils.isNull(children)) {
+            if (utils.isNotNull(children)) {
                 nodeHTML += tree.buildTree(children);
             }
         }
@@ -251,16 +317,18 @@ var tree = {
 };
 /**
  * some utils
- * @type {{isNull: utils.isNull}}
  */
 var utils = {
     /**
-     *  confirm whether null
+     * confirm whether null
      * @param value
      * @returns {boolean}
      */
     isNull: function (value) {
         return value == null || $.trim(value) == '' || $.trim(value) == 'null' ||
             $.trim(value) == 'NULL' || typeof(value) == 'undefined';
+    },
+    isNotNull: function (value) {
+        return !utils.isNull(value);
     }
 };

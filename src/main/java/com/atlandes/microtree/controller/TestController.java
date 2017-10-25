@@ -5,6 +5,7 @@ import com.atlandes.microtree.test.Test;
 import com.atlandes.microtree.tree.DefaultTree;
 import com.atlandes.microtree.tree.Node;
 import com.atlandes.microtree.tree.Tree;
+import com.atlandes.microtree.tree.TreeVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,10 +26,13 @@ public class TestController {
 
     @RequestMapping("getTree")
     @ResponseBody
-    public Node getTree(String ids) {
+    public TreeVO getTree(String ids) {
+        TreeVO vo = new TreeVO();
         Tree tree = new DefaultTree(Test.getTestData());
         tree.downwardTravel(new DefaultPreProcessor(tree, ids));
-        return tree.getRoot();
+        vo.setRoot(tree.getRoot());
+        vo.setDict(tree.dict());
+        return vo;
     }
 
 }
