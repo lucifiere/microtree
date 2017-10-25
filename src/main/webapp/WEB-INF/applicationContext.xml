@@ -19,7 +19,13 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"/>
+    <bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+        <property name="features">
+            <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
+                <value>DisableCircularReferenceDetect</value>
+            </array>
+        </property>
+    </bean>
 
     <!-- 静态资源 -->
     <mvc:resources mapping="/html/**" location="/html/" cache-period="1000000"/>

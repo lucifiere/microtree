@@ -256,17 +256,21 @@ var tree = {
         if (tree.initContainer()) {
             $.ajax({
                 type: "post",
-                url: "/microtree/getTree.do?ids=" + setting.checkedIDList.join(","),
-                dataType: 'json',
+                url: "/microtree/getTree.do?",
+                data: {"ids": setting.checkedIDList.join(",")},
+                dataType: "json",
                 async: false,
                 success: function (result) {
                     if (utils.isNotNull(result.root)) {
                         tree.tree = result.root.children;
                         tree.dict = result.dict;
-                        tree.container.html(tree.buildTree(tree.tree));
+                        tree.container.html(tree.buildTree(result.root.children));
                     } else {
                         alert("load tree failed！");
                     }
+                },
+                error: function (jqXHR, status, err) {
+                    alert("server error" + jqXHR + ";" + status + ";" + err);
                 }
             });
         }
